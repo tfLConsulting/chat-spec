@@ -4,7 +4,7 @@
 
 The purest version of "chat-spec is a protocol" is: **the GitHub README is the entire product.** A developer, in whatever AI tool they're already using, says:
 
-> "Go read https://github.com/lindow-consulting/chat-spec and do what it says for this project"
+> "Go read https://github.com/tfLConsulting/chat-spec and do what it says for this project"
 
 The AI fetches the README, understands the methodology, and runs it. No install. No CLI. No MCP server. No custom command. Just a URL and an instruction.
 
@@ -80,7 +80,7 @@ The second option is elegant: chat-spec's first action is to write a thin CLAUDE
 
 ```
 ## Chat-spec
-This project uses chat-spec (https://github.com/lindow-consulting/chat-spec).
+This project uses chat-spec (https://github.com/tfLConsulting/chat-spec).
 Read the protocol at the link above, then read specs/manifest.yaml to continue.
 ```
 
@@ -97,7 +97,7 @@ One paragraph: why you'd use it.
 ## Quick start
 
 > Paste this in your AI assistant:
-> "Read https://github.com/lindow-consulting/chat-spec and run it on this project"
+> "Read https://github.com/tfLConsulting/chat-spec and run it on this project"
 
 That's it. That's the install.
 

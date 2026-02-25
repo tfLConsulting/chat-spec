@@ -48,7 +48,7 @@ This is the most important part of the README. The entire product distribution i
 
 Add this to your project's `CLAUDE.md` (or tell your AI assistant):
 
-> Follow the chat-spec protocol at https://github.com/lindow-consulting/chat-spec/blob/main/PROTOCOL.md
+> Follow the chat-spec protocol at https://github.com/tfLConsulting/chat-spec/blob/main/PROTOCOL.md
 > to evaluate and improve this project's documentation.
 
 Then ask your AI to "run chat-spec" in your project.
@@ -59,7 +59,7 @@ Then ask your AI to "run chat-spec" in your project.
 ```markdown
 Or for Cursor, add to `.cursorrules`:
 
-Follow the chat-spec protocol at https://github.com/lindow-consulting/chat-spec/blob/main/PROTOCOL.md
+Follow the chat-spec protocol at https://github.com/tfLConsulting/chat-spec/blob/main/PROTOCOL.md
 to evaluate and improve this project's documentation.
 ```
 
@@ -70,7 +70,7 @@ Some users don't want to edit config files. They just want to try it:
 ```markdown
 **Just want to try it?** Paste this into any AI assistant:
 
-"Read https://github.com/lindow-consulting/chat-spec/blob/main/PROTOCOL.md and follow the chat-spec protocol for this project."
+"Read https://github.com/tfLConsulting/chat-spec/blob/main/PROTOCOL.md and follow the chat-spec protocol for this project."
 ```
 
 **Decision: Lead with the universal paste, then show tool-specific config options below it.** The universal version has the lowest friction — no file editing needed. Power users can then add the config pointer for automatic discovery.

@@ -18,18 +18,18 @@ No installation. No dependencies. Just a protocol your AI reads and follows.
 
 Paste this into any AI assistant:
 
-> Read https://github.com/lindow-consulting/chat-spec/blob/main/PROTOCOL.md and follow the chat-spec protocol for this project.
+> Read https://github.com/tfLConsulting/chat-spec/blob/main/PROTOCOL.md and follow the chat-spec protocol for this project.
 
 Or add it permanently to your AI config file:
 
 **Claude Code** — add to `CLAUDE.md`:
 ```
-Follow the chat-spec protocol at https://github.com/lindow-consulting/chat-spec/blob/main/PROTOCOL.md to evaluate and improve this project's documentation.
+Follow the chat-spec protocol at https://github.com/tfLConsulting/chat-spec/blob/main/PROTOCOL.md to evaluate and improve this project's documentation.
 ```
 
 **Cursor** — add to `.cursorrules`:
 ```
-Follow the chat-spec protocol at https://github.com/lindow-consulting/chat-spec/blob/main/PROTOCOL.md to evaluate and improve this project's documentation.
+Follow the chat-spec protocol at https://github.com/tfLConsulting/chat-spec/blob/main/PROTOCOL.md to evaluate and improve this project's documentation.
 ```
 
 Then ask your AI to "run chat-spec."
