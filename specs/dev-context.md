@@ -22,11 +22,10 @@ Three phases, each in `specs/development-history/`:
 
 1. **Noodling** (done) -- 5 idea sketches, 10 decision points, 8 explorations. Settled the "what is this thing?" question.
 2. **Protocol design** (done) -- 9 design questions (DQ0-DQ8) worked through sequentially. Research-grounded: 7+ academic papers and industry sources cited.
-3. **Build** (current) -- PROTOCOL.md, RUBRICS.md, README.md written. Blank-slate testing with Haiku passed (3/3). Dogfooding and final polish remain.
+3. **Build** (done) -- PROTOCOL.md, RUBRICS.md, README.md written. Blank-slate testing with Haiku passed (3/3). Self-dogfooding complete. Final polish done. External dogfooding on other projects deferred to user.
 
 ## Gotchas
 
-- **This is not a git repo yet.** The project root has no `.git/`. Staleness detection (section 2 of PROTOCOL.md) falls back to file modification times instead of git log.
 - **The "product" is PROTOCOL.md, not code.** There is no src/, no tests/, no build system. Quality is measured by whether AI models follow the protocol correctly, not by unit tests.
 - **specs/ is overloaded.** `specs/` serves two purposes: (1) it holds chat-spec's own documentation (decisions, landscape research, development history) and (2) it is the default artifact directory name that the protocol tells *other projects* to use. These are separate concerns that happen to share a name.
 - **Development history is intentionally verbose.** The `specs/development-history/` tree has ~30 files from the noodling and design phases. These are kept for provenance, not for regular reading. The decisions.md file is the consolidated view.
@@ -47,6 +46,6 @@ Blank-slate testing (step 4 in the build plan) is the closest thing to a test su
 
 Per `specs/development-history/03-build/plan.md`, remaining work:
 
-1. Dogfood chat-spec on itself (this run is that)
+1. ~~Dogfood chat-spec on itself~~ (done — two sessions)
 2. Dogfood on other real projects
-3. Final polish (token budget audit, YAML schema validation, cross-reference check)
+3. ~~Final polish~~ (done — token budget audit, YAML schema validation, cross-reference check)

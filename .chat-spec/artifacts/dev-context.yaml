@@ -25,7 +25,4 @@ checklist:
   - id: current
     result: yes
 
-backlog:
-  - item: "Re-evaluate after git repo is initialised (staleness detection will change)"
-    priority: low
-    found: 2026-02-25
+backlog: []

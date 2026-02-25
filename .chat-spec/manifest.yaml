@@ -35,12 +35,10 @@ artifacts:
     status: current
     last_evaluated: 2026-02-25
 
-backlog:
-  - artifact: dev-context
-    item: "Re-evaluate after git repo is initialised (staleness detection will change)"
-    priority: low
+backlog: []
 
 log:
+  - "2026-02-25: Updated dev-context (4/5→4/5). Fixed stale gotcha (git repo exists now), updated phases and roadmap. Backlog cleared."
   - "2026-02-25: Generated features (5/5) and conventions (5/5). All rubric items pass for both."
   - "2026-02-25: Generated architecture spec (5/5). All 10 rubric items pass."
   - "2026-02-25: First run. Created manifest with 4 core artifacts. Generated dev-context (4/5). Architecture, features, conventions still missing."
