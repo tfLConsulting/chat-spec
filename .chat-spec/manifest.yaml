@@ -12,21 +12,21 @@ config:
 artifacts:
   architecture:
     path: "specs/architecture.md"
-    score: 0
+    score: 5
     max_score: 5
-    status: missing
+    status: current
     last_evaluated: 2026-02-25
   features:
     path: "specs/features.md"
-    score: 0
+    score: 5
     max_score: 5
-    status: missing
+    status: current
     last_evaluated: 2026-02-25
   conventions:
     path: "specs/conventions.md"
-    score: 0
+    score: 5
     max_score: 5
-    status: missing
+    status: current
     last_evaluated: 2026-02-25
   dev-context:
     path: "specs/dev-context.md"
@@ -36,18 +36,11 @@ artifacts:
     last_evaluated: 2026-02-25
 
 backlog:
-  - artifact: architecture
-    item: "Create architecture spec covering protocol components, manifest schema, and state management"
-    priority: high
-  - artifact: features
-    item: "Create features spec covering all protocol capabilities"
-    priority: high
-  - artifact: conventions
-    item: "Create conventions spec for spec-writing patterns, YAML schema rules, naming"
-    priority: medium
   - artifact: dev-context
     item: "Re-evaluate after git repo is initialised (staleness detection will change)"
     priority: low
 
 log:
+  - "2026-02-25: Generated features (5/5) and conventions (5/5). All rubric items pass for both."
+  - "2026-02-25: Generated architecture spec (5/5). All 10 rubric items pass."
   - "2026-02-25: First run. Created manifest with 4 core artifacts. Generated dev-context (4/5). Architecture, features, conventions still missing."

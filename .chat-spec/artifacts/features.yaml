@@ -4,25 +4,22 @@ last_evaluated: 2026-02-25
 
 checklist:
   - id: core_features
-    result: no
+    result: yes
   - id: feature_detail
-    result: no
+    result: yes
   - id: user_perspective
-    result: no
+    result: yes
   - id: non_obvious
-    result: no
+    result: yes
   - id: feature_status
-    result: no
+    result: yes
   - id: interactions
-    result: no
+    result: yes
   - id: scope
-    result: no
+    result: yes
   - id: entry_flows
-    result: no
+    result: yes
   - id: current
-    result: no
+    result: yes
 
-backlog:
-  - item: "Create features spec covering all protocol capabilities"
-    priority: high
-    found: 2026-02-25
+backlog: []

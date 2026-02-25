@@ -2,6 +2,12 @@
 
 You are following the chat-spec protocol. Your job: evaluate this project's documentation against rubrics, identify gaps, and generate improvements — one focused action per session, always with user approval.
 
+## Working Principles
+
+**Persist as you go.** Context windows are finite; disk is not. After any research-heavy phase (scanning, deep code exploration, artifact drafting), write your findings to a working file before moving on. If your context is lost, your work survives.
+
+Use `.chat-spec/working/` for transient research notes. Clean up working files after each session.
+
 ## Quick Reference
 
 Every session:
@@ -80,6 +86,13 @@ Look for existing documentation and context:
 - Code structure: `src/`, `lib/`, `app/`, `tests/`
 - Git history: repo age, activity level
 
+**Write scan findings to disk immediately.** Create `.chat-spec/working/scan.md` with:
+- Project summary (stack, structure, notable patterns)
+- Existing documentation found and where
+- Initial observations about documentation gaps
+
+This file is your working memory. It ensures your scan survives context limits and can be referenced during artifact generation later.
+
 ### Step 2: Propose a manifest
 
 Based on the scan, propose which artifacts to track. Do NOT propose all 13 types — only what this project needs. Always include the 4 core types (architecture, features, conventions, dev-context). Add specialised types only if relevant (e.g., api-docs if there are API endpoints).
@@ -114,6 +127,7 @@ On user approval, create:
   manifest.yaml
   protocol.md          # cached copy of this protocol
   rubrics.md           # cached copy of rubrics
+  working/             # transient research notes (safe to .gitignore)
   artifacts/
 ```
 
@@ -127,6 +141,8 @@ Pick the highest-impact artifact to generate first:
 1. Prefer artifacts that already have partial content to build on
 2. Prefer artifacts where the codebase reveals the most (architecture is often good)
 3. Prefer whatever the user asked about
+
+**Write research notes as you explore.** As you read code for the artifact, write findings to `.chat-spec/working/<artifact-key>.md` — code references, key patterns, non-obvious details. Then compose the artifact from your notes, not from context alone. Delete the working file after the artifact is complete and scored.
 
 Generate it following the spec-writing rules in section 1. Evaluate it against the rubric. Update the manifest.
 
@@ -193,9 +209,11 @@ For the chosen artifact:
 2. Read the artifact file itself
 3. Evaluate against the rubric
 4. Present the gap analysis (failing items sorted by weight)
-5. On user approval, generate improvements
-6. Re-evaluate to confirm improvement
-7. Update manifest and detail file
+5. On user approval, research the codebase and **write findings to `.chat-spec/working/<artifact-key>.md`** as you explore — this protects your research from context loss during long sessions
+6. Generate improvements from your research notes
+7. Re-evaluate to confirm improvement
+8. Update manifest and detail file
+9. Delete the working file
 
 ### Step 5: Clean exit
 
@@ -214,13 +232,18 @@ Before ending any session:
   manifest.yaml              # always read first
   protocol.md                # cached protocol (created on first run)
   rubrics.md                 # cached rubrics (created on first run)
+  working/                   # transient research notes
+    scan.md                  # project scan findings (first run)
+    architecture.md          # research notes during generation
   artifacts/                  # per-artifact detail files
     architecture.yaml
     features.yaml
     ...
 ```
 
-Recommend committing `.chat-spec/` to version control. The cached protocol and rubrics ensure consistent scoring across sessions and team members.
+The `working/` directory holds transient files used during research. These are not scored or tracked — they exist to protect against context window limits. Clean them up after each session.
+
+Recommend committing `.chat-spec/` to version control (consider adding `.chat-spec/working/` to `.gitignore`). The cached protocol and rubrics ensure consistent scoring across sessions and team members.
 
 ### Manifest schema
 
