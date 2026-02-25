@@ -1,0 +1,28 @@
+artifact: conventions
+type: conventions
+last_evaluated: 2026-02-25
+
+checklist:
+  - id: code_style
+    result: no
+  - id: patterns
+    result: no
+  - id: non_obvious
+    result: no
+  - id: naming
+    result: no
+  - id: testing
+    result: no
+  - id: file_structure
+    result: no
+  - id: anti_patterns
+    result: no
+  - id: examples
+    result: no
+  - id: current
+    result: no
+
+backlog:
+  - item: "Create conventions spec for spec-writing patterns, YAML schema rules, naming"
+    priority: medium
+    found: 2026-02-25

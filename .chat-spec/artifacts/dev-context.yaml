@@ -1,0 +1,31 @@
+artifact: dev-context
+type: dev-context
+last_evaluated: 2026-02-25
+
+checklist:
+  - id: project_purpose
+    result: yes
+  - id: key_decisions
+    result: yes
+  - id: non_obvious
+    result: yes
+  - id: setup
+    result: na
+    note: "Documentation-only project, no dev environment to set up"
+  - id: build_run
+    result: yes
+    note: "Covers blank-slate testing approach, which is this project's equivalent of a test suite"
+  - id: history
+    result: yes
+  - id: team_context
+    result: na
+    note: "Solo project"
+  - id: roadmap
+    result: yes
+  - id: current
+    result: yes
+
+backlog:
+  - item: "Re-evaluate after git repo is initialised (staleness detection will change)"
+    priority: low
+    found: 2026-02-25

@@ -1,0 +1,30 @@
+artifact: architecture
+type: architecture
+last_evaluated: 2026-02-25
+
+checklist:
+  - id: components
+    result: no
+  - id: relationships
+    result: no
+  - id: data_flow
+    result: no
+  - id: non_obvious
+    result: no
+  - id: boundaries
+    result: no
+  - id: entry_points
+    result: no
+  - id: persistence
+    result: no
+  - id: external
+    result: no
+  - id: constraints
+    result: no
+  - id: current
+    result: no
+
+backlog:
+  - item: "Create architecture spec covering protocol components, manifest schema, and state management"
+    priority: high
+    found: 2026-02-25

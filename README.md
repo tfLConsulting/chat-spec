@@ -80,4 +80,3 @@ chat-spec's spec-writing rules are grounded in research showing that AI-generate
 
 - [PROTOCOL.md](./PROTOCOL.md) — the full protocol (what your AI reads)
 - [RUBRICS.md](./RUBRICS.md) — scoring rubrics for all artifact types
-# chat-spec

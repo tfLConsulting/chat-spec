@@ -1,0 +1,28 @@
+artifact: features
+type: features
+last_evaluated: 2026-02-25
+
+checklist:
+  - id: core_features
+    result: no
+  - id: feature_detail
+    result: no
+  - id: user_perspective
+    result: no
+  - id: non_obvious
+    result: no
+  - id: feature_status
+    result: no
+  - id: interactions
+    result: no
+  - id: scope
+    result: no
+  - id: entry_flows
+    result: no
+  - id: current
+    result: no
+
+backlog:
+  - item: "Create features spec covering all protocol capabilities"
+    priority: high
+    found: 2026-02-25
