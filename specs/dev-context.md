@@ -18,11 +18,12 @@ chat-spec solves the gap between "AI tools can generate code" and "AI tools gene
 
 ## Development Phases
 
-Three phases, each in `specs/development-history/`:
+Four phases, each in `specs/development-history/`:
 
 1. **Noodling** (done) -- 5 idea sketches, 10 decision points, 8 explorations. Settled the "what is this thing?" question.
 2. **Protocol design** (done) -- 9 design questions (DQ0-DQ8) worked through sequentially. Research-grounded: 7+ academic papers and industry sources cited.
-3. **Build** (done) -- PROTOCOL.md, RUBRICS.md, README.md written. Blank-slate testing with Haiku passed (3/3). Self-dogfooding complete. Final polish done. External dogfooding on other projects deferred to user.
+3. **Build** (done) -- PROTOCOL.md, RUBRICS.md, README.md written. Blank-slate testing with Haiku passed (3/3). Self-dogfooding complete.
+4. **Rubric redesign** (done) -- Rubrics had a new-doc bias (measured completeness, couldn't detect problems). Reframed questions toward value-added, boosted `current` W:1→W:2, added universal penalty items (`code_restatement` -2, `contradictions` -3). Research-grounded (see `research/ai-doc-quality.md`).
 
 ## Gotchas
 
@@ -44,8 +45,9 @@ Blank-slate testing (step 4 in the build plan) is the closest thing to a test su
 
 ## Roadmap
 
-Per `specs/development-history/03-build/plan.md`, remaining work:
+Remaining work:
 
-1. ~~Dogfood chat-spec on itself~~ (done — two sessions)
-2. Dogfood on other real projects
-3. ~~Final polish~~ (done — token budget audit, YAML schema validation, cross-reference check)
+1. ~~Dogfood chat-spec on itself~~ (done — multiple sessions, all 4 core artifacts at 4-5/5)
+2. ~~Rubric redesign~~ (done — phase 04, penalty items and reframed questions)
+3. Dogfood on other real projects — the real validation that the protocol works outside its own repo
+4. ~~Final polish~~ (done — token budget audit, YAML schema validation, cross-reference check)

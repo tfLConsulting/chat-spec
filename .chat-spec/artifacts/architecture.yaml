@@ -1,6 +1,6 @@
 artifact: architecture
 type: architecture
-last_evaluated: 2026-02-25
+last_evaluated: 2026-02-26
 
 checklist:
   - id: components
@@ -23,5 +23,9 @@ checklist:
     result: yes
   - id: current
     result: yes
+  - id: code_restatement
+    result: no
+  - id: contradictions
+    result: no
 
 backlog: []

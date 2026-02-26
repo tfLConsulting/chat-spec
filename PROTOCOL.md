@@ -56,15 +56,29 @@ After generating a spec, self-check: "What would a new AI learn from this that i
 
 ### How to score
 
-Read the artifact file. For each rubric item, score YES or NO:
+Read the artifact file. Score each rubric item — positive items and penalty items have different polarity:
 
 1. Read the rubric for this artifact type (section 7 for core types, RUBRICS.md for others)
-2. Score each item: YES (clearly met) or NO (not met or unclear)
-3. If an item doesn't apply to this project, mark it N/A and reduce the max score
-4. Calculate total: sum of weights for YES items
-5. Map to level 1-5 using the rubric's level boundaries
-6. Update the manifest: `score`, `last_evaluated`, `status`
-7. Update the detail file: per-item results with notes on failing items
+2. Score each positive item: YES (clearly met) or NO (not met or unclear)
+3. Score each penalty item: YES (problem exists) or NO (problem absent). For any YES penalty, cite a specific example from the document
+4. If a positive item doesn't apply to this project, mark it N/A and subtract its weight from the max score. Keep the level boundaries unchanged — they are fixed per rubric type
+5. Calculate total: sum of YES positive weights, minus sum of YES penalty weights. Clamp at 0 (no negative scores)
+6. Map to level 1-5 using the rubric's level boundaries
+7. Update the manifest: `score`, `last_evaluated`, `status`
+8. Update the detail file: per-item results with notes on failing items and penalty citations
+
+### Universal penalty items
+
+Every artifact type includes two penalty items. These detect document-level problems that per-item scoring cannot catch:
+
+| Item | W | Question |
+|------|---|----------|
+| code_restatement | -2 | Contains significant content that restates what an AI would infer from code, configs, or standard conventions? |
+| contradictions | -3 | Contains claims that contradict the current codebase? |
+
+YES on a penalty means the problem exists — the weight is subtracted from the total. The evaluator must cite specific examples (e.g., "The middleware section restates what is visible in `server.ts` lines 12-45").
+
+Note: the `contradictions` penalty overlaps with the `current` positive item — a document with contradictions loses both the `current` points (+2) and the penalty (-3), for a total swing of -5. This is intentional. Contradictions are the most damaging form of documentation noise (Anthropic context engineering research) and warrant double weight.
 
 ### Staleness detection
 
@@ -343,7 +357,7 @@ Do NOT commit changes that don't improve the score unless the user explicitly ap
 
 Rubrics for all 13 built-in types are defined in RUBRICS.md. The four core rubrics are included here for convenience.
 
-Scoring: each item is YES (weight counts) or NO (0). Sum YES weights. Map total to level 1-5 using the boundaries below. Items marked N/A reduce the max score.
+Scoring: each positive item is YES (weight counts) or NO (0). Each penalty item is YES (problem exists, weight subtracted) or NO (0). For YES penalties, cite specific examples. Sum positive YES weights minus penalty YES weights. Clamp at 0. Map to level 1-5 using the boundaries below. Items marked N/A reduce the max score. See section 2 for full scoring rules.
 
 ### Architecture
 
@@ -351,18 +365,20 @@ System structure, components, relationships, data flow.
 
 | Item | W | Question |
 |------|---|----------|
-| components | 3 | Lists all major system components/services? |
-| relationships | 3 | Describes how components communicate? |
-| data_flow | 2 | Shows how data moves through the system? |
+| components | 3 | Identifies system components, focusing on roles and interactions not obvious from code structure? |
+| relationships | 3 | Explains component communication patterns not obvious from imports or direct dependencies? |
+| data_flow | 2 | Documents data flow for key operations where the path is non-obvious or crosses system boundaries? |
 | non_obvious | 2 | Documents decisions, rationale, and constraints not inferable from code? |
-| boundaries | 2 | Defines clear boundaries between components? |
-| entry_points | 1 | Identifies system entry points? |
-| persistence | 1 | Documents data storage approach? |
-| external | 1 | Lists external dependencies? |
+| boundaries | 2 | Defines component ownership and responsibilities beyond what directory structure conveys? |
+| entry_points | 1 | Identifies system entry points, especially non-obvious ones (background jobs, event handlers, CLIs)? |
+| persistence | 1 | Documents data storage decisions and constraints not evident from config and schema files? |
+| external | 1 | Notes external service dependencies and constraints not captured in package manifests? |
 | constraints | 1 | Notes architectural constraints or trade-offs? |
-| current | 1 | Reflects the actual current state? |
+| current | 2 | Accurately reflects the current codebase with no stale or contradictory claims? |
+| code_restatement | -2 | Contains significant content that restates what an AI would infer from code, configs, or standard conventions? |
+| contradictions | -3 | Contains claims that contradict the current codebase? |
 
-Max: 17. Levels: 1 (0-3), 2 (4-7), 3 (8-10), 4 (11-14), 5 (15-17)
+Max: 18. Levels: 1 (0-3), 2 (4-7), 3 (8-11), 4 (12-15), 5 (16-18)
 
 ### Features
 
@@ -370,17 +386,19 @@ What the project does — capabilities, user-facing functionality.
 
 | Item | W | Question |
 |------|---|----------|
-| core_features | 3 | Lists all major features/capabilities? |
-| feature_detail | 3 | Describes what each feature does? |
-| user_perspective | 2 | Explains features from the user's perspective? |
+| core_features | 3 | Describes major features, focusing on behaviour and intent not obvious from the UI or code? |
+| feature_detail | 3 | Explains what features do and why, beyond what a user or AI would discover through exploration? |
+| user_perspective | 2 | Explains features from the user's perspective, including non-obvious workflows and expected outcomes? |
 | non_obvious | 2 | Documents non-obvious behaviour and design rationale not inferable from code? |
-| feature_status | 2 | Indicates status of each feature? |
-| interactions | 1 | Describes how features interact? |
+| feature_status | 2 | Indicates feature status (complete, in progress, planned, deprecated)? |
+| interactions | 1 | Describes feature interactions and dependencies not obvious from code? |
 | scope | 1 | Distinguishes what the project does vs. doesn't? |
-| entry_flows | 1 | Describes key user workflows? |
-| current | 1 | Reflects the actual current state? |
+| entry_flows | 1 | Describes key user workflows, especially where the path is non-obvious? |
+| current | 2 | Accurately reflects current feature state with no stale or contradictory claims? |
+| code_restatement | -2 | Contains significant content that restates what an AI would infer from code, configs, or standard conventions? |
+| contradictions | -3 | Contains claims that contradict the current codebase? |
 
-Max: 16. Levels: 1 (0-3), 2 (4-6), 3 (7-10), 4 (11-13), 5 (14-16)
+Max: 17. Levels: 1 (0-3), 2 (4-7), 3 (8-10), 4 (11-14), 5 (15-17)
 
 ### Conventions
 
@@ -388,17 +406,19 @@ Coding standards, patterns, naming, testing expectations.
 
 | Item | W | Question |
 |------|---|----------|
-| code_style | 3 | Documents code style and formatting rules? |
-| patterns | 3 | Describes key patterns in the codebase? |
+| code_style | 3 | Documents code style rules that differ from language/framework defaults or linter config? |
+| patterns | 3 | Describes key codebase patterns an AI would not infer from reading a few files? |
 | non_obvious | 2 | Captures conventions that deviate from defaults or would be guessed wrong? |
-| naming | 2 | Defines naming conventions? |
-| testing | 2 | Documents testing expectations? |
-| file_structure | 2 | Explains file/directory organisation? |
+| naming | 2 | Defines naming conventions where they deviate from standard practices or vary by context? |
+| testing | 2 | Documents testing expectations beyond what test config and existing tests convey? |
+| file_structure | 2 | Explains file/directory conventions not obvious from inspecting the tree? |
 | anti_patterns | 1 | Lists things to avoid? |
-| examples | 1 | Includes code examples? |
-| current | 1 | Reflects actual codebase practices? |
+| examples | 1 | Includes code examples demonstrating non-obvious conventions? |
+| current | 2 | Accurately reflects actual codebase practices with no aspirational or outdated claims? |
+| code_restatement | -2 | Contains significant content that restates what an AI would infer from code, configs, or standard conventions? |
+| contradictions | -3 | Contains claims that contradict the current codebase? |
 
-Max: 17. Levels: 1 (0-3), 2 (4-7), 3 (8-10), 4 (11-14), 5 (15-17)
+Max: 18. Levels: 1 (0-3), 2 (4-7), 3 (8-11), 4 (12-15), 5 (16-18)
 
 ### Development Context
 
@@ -409,14 +429,16 @@ Project history, key decisions, setup, gotchas.
 | project_purpose | 3 | Explains what the project is and why it exists? |
 | key_decisions | 3 | Documents major decisions and their rationale? |
 | non_obvious | 2 | Captures gotchas, surprises, things that look wrong but aren't? |
-| setup | 2 | Describes how to set up the dev environment? |
-| build_run | 2 | Documents how to build, run, and test? |
+| setup | 2 | Documents dev environment setup steps not obvious from package manifests and config files? |
+| build_run | 2 | Documents build, run, and test commands, especially non-standard steps or prerequisites? |
 | history | 1 | Provides relevant project history? |
 | team_context | 1 | Notes team structure or ownership? |
 | roadmap | 1 | Indicates what's planned? |
-| current | 1 | Reflects the actual current state? |
+| current | 2 | Accurately reflects the current state with no stale or contradictory claims? |
+| code_restatement | -2 | Contains significant content that restates what an AI would infer from code, configs, or standard conventions? |
+| contradictions | -3 | Contains claims that contradict the current codebase? |
 
-Max: 16. Levels: 1 (0-3), 2 (4-6), 3 (7-10), 4 (11-13), 5 (14-16)
+Max: 17. Levels: 1 (0-3), 2 (4-7), 3 (8-10), 4 (11-14), 5 (15-17)
 
 ## 8. Artifact Catalogue
 

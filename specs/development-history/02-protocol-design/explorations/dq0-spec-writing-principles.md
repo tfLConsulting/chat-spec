@@ -192,3 +192,17 @@ The protocol should include a validation approach:
 | 3 | Capture the delta, not the state | Anthropic context engineering: smallest set of high-signal tokens |
 | 4 | Test with dumb agents | ETH Zurich methodology + Anthropic multi-agent isolation |
 | 5 | Token efficiency is a feature | Databricks (2024): performance degrades after 32-64K tokens |
+
+---
+
+## Addendum: Phase 04 Rubric Redesign
+
+These principles were validated and strengthened by additional research in phase 04 (see `research/ai-doc-quality.md`). Key new evidence:
+
+- **Chroma "Context Rot" study (194k LLM calls, 18 models):** Models performed worse on coherent documents than shuffled ones. Well-written comprehensive prose paradoxically makes finding specific facts harder.
+- **Instruction-following limits (arXiv:2507.11538):** At 100 instructions, accuracy drops to 50-98%. At 500, even the best model hits 62.8%. Every line of documentation competes for a finite attention budget.
+- **MQM framework (translation industry):** Subtractive scoring (start at max, deduct for errors) is the proven approach for evaluating existing artifacts — directly relevant to scoring documentation that already exists vs documentation being generated fresh.
+
+The principles here (especially Principle 1: "Don't tell LLMs what they already know") were baked into the rubric redesign by reframing rubric questions from "does X exist?" to "does X provide value beyond what code expresses?" and by adding penalty items for code restatement and contradictions.
+
+See `specs/development-history/04-rubric-redesign/plan.md` for the full redesign.

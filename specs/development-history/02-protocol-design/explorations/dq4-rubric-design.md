@@ -252,3 +252,18 @@ The AI reports both: "Architecture: 3/5 (score: 10/17)"
 | Where do rubrics live? | Built-in: PROTOCOL.md. Custom: per-artifact detail file |
 | How do rubrics guide generation? | Failing items sorted by weight = improvement priority |
 | Level mapping? | Per-rubric boundaries, tuned so level 3 = "usable" |
+
+---
+
+## Addendum: Phase 04 Rubric Redesign
+
+The rubrics designed here had a structural blind spot identified during phase 04: they measured **completeness** (presence of content) but could not detect problems common in existing documentation — verbosity, staleness, code restatement, contradictions.
+
+New research (see `research/ai-doc-quality.md`) showed that the `current` item at W:1 was severely misweighted given that accuracy/freshness is the #2 quality signal for AI tools (Anthropic, Chroma Context Rot study). The rubrics also had zero negative signals — a verbose 20KB doc that checked every box scored 5/5 despite potentially hurting AI performance.
+
+Phase 04 made three changes:
+1. **Reframed rubric questions** from "does X exist?" to "does X provide value beyond what code expresses?" — keeping binary YES/NO (preserving DQ4's reproducibility finding) but changing the bar
+2. **Boosted `current` from W:1 to W:2** in every rubric, reflecting research on accuracy importance
+3. **Added two universal penalty items** (`code_restatement` W:-2, `contradictions` W:-3) to catch document-level problems
+
+See `specs/development-history/04-rubric-redesign/plan.md` for full context.

@@ -1,8 +1,8 @@
 # Research
 
-Landscape research for the chat-spec project. Conducted 2026-02-25.
+Research for the chat-spec project. Landscape research conducted 2026-02-25, rubric design research conducted 2026-02-26.
 
-Summary and analysis lives in `specs/landscape-research.md`. This directory has the detailed per-tool notes so we don't need to re-research.
+Tool landscape summary and analysis lives in `specs/landscape-research.md`. The `tools/` subdirectory has detailed per-tool notes. Top-level files cover broader research topics.
 
 ## SDD Tools
 - [github-spec-kit.md](tools/github-spec-kit.md) — GitHub's dominant SDD toolkit (71.9k stars)
@@ -31,3 +31,6 @@ Summary and analysis lives in `specs/landscape-research.md`. This directory has 
 
 ## Academic Research
 - [academic-papers.md](tools/academic-papers.md) — ETH Zurich evaluation, Codified Context, Canterbury study
+
+## Rubric Design Research
+- [ai-doc-quality.md](ai-doc-quality.md) — What makes docs help vs hurt AI tools, scoring frameworks, failure modes in existing docs
