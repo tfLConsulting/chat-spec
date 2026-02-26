@@ -38,8 +38,8 @@ artifacts:
 backlog: []
 
 log:
+  - "2026-02-26: Restructured dev-context. Applied guidance principles: trimmed Development Phases to pointer, compressed Key Decisions table, added Team section. Uses index-plus-detail pattern with pointers to decisions.md and development-history/README.md. Re-evaluated at 5/5."
   - "2026-02-26: Updated dev-context (4/5→5/5). Fixed 'Three phases' contradiction, added phase 04 entry, updated roadmap. Backlog cleared. All 4 artifacts now at 5/5."
   - "2026-02-26: Rubric redesign (phase 04). Reframed questions toward value, boosted current W:1→W:2, added universal penalties (code_restatement -2, contradictions -3). Re-evaluated all 4 artifacts. Architecture 5/5, features 5/5, conventions 5/5, dev-context 4/5 (contradictions penalty: stale phase count)."
   - "2026-02-25: Updated dev-context (4/5→4/5). Fixed stale gotcha (git repo exists now), updated phases and roadmap. Backlog cleared."
   - "2026-02-25: Generated features (5/5) and conventions (5/5). All rubric items pass for both."
-  - "2026-02-25: First run. Created manifest with 4 core artifacts. Generated dev-context (4/5). Architecture, features, conventions still missing."

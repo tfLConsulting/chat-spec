@@ -4,6 +4,8 @@ Scoring rubrics for all 13 built-in artifact types. Core rubrics (architecture, 
 
 **Scoring:** Each positive item is YES (weight counts) or NO (0). Each penalty item is YES (problem exists, weight subtracted) or NO (0). For YES penalties, cite specific examples. Sum positive YES weights minus penalty YES weights. Clamp at 0. Map total to level 1-5 using the boundaries. Items marked N/A reduce the max score (level boundaries stay fixed).
 
+**Guidance:** For research-distilled principles on what makes documentation help vs. hurt AI tools, see [guidance/INDEX.md](https://github.com/tfLConsulting/chat-spec/blob/main/guidance/INDEX.md).
+
 ---
 
 ## Architecture
@@ -264,3 +266,11 @@ CLAUDE.md, .cursorrules — how the project configures AI tools.
 | contradictions | -3 | Contains claims that contradict the current codebase? |
 
 Max: 15. Levels: 1 (0-3), 2 (4-6), 3 (7-9), 4 (10-12), 5 (13-15)
+
+---
+
+## Source
+
+**Repository:** https://github.com/tfLConsulting/chat-spec
+
+This file is part of the chat-spec protocol. See PROTOCOL.md section 10 for update instructions.

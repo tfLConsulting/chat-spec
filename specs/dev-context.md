@@ -2,38 +2,31 @@
 
 ## Why This Exists
 
-chat-spec solves the gap between "AI tools can generate code" and "AI tools generate *good* code for *your* project." The core bet: iterative, scored documentation tracking produces better AI context than one-shot generation or manual maintenance. No existing tool does this -- the landscape research (specs/landscape-research.md) confirmed the scored-manifest-plus-iterative-improvement approach is novel.
-
-## Key Decisions
-
-| Decision | Choice | Why not the alternative |
-|----------|--------|------------------------|
-| Protocol, not a tool | Markdown file an AI reads | Zero install friction. Works with any AI tool. Avoids the "install our CLI" barrier that kills adoption for solo devs. |
-| One artifact per session | Hard limit in protocol | AI context windows fill up. Users lose patience. Research (ETH Zurich) shows quality degrades when generating too much at once. |
-| YAML manifest, not JSON | `.chat-spec/manifest.yaml` | AIs read YAML more reliably than JSON for config-like data. Humans can edit it. Explored in DQ3. |
-| Checklist rubrics (YES/NO weighted) | Not Likert scales or LLM-as-judge | Binary scoring is most reproducible across different AI models. Research: "Rubric Is All You Need" (ACM ICER 2025), Hamel Husain's pass/fail findings. |
-| Spec-writing rules ban restating code | Section 1 of PROTOCOL.md | ETH Zurich found LLM-generated docs that restate what's in code *hurt* AI performance and increase inference cost 20%+. This is the single most important quality principle. |
-| Built-in catalogue of 13 types, 4 core required | Not a blank slate | Opinionated defaults lower the "what do I write?" barrier. Extensible via custom rubrics for projects that need it. |
-| Thin pointer in AI config, not full sync | Append-only to CLAUDE.md/.cursorrules | Avoids the cross-tool sync problem entirely. Each tool reads its own config; chat-spec just adds a 3-line pointer. |
-
-## Development Phases
-
-Four phases, each in `specs/development-history/`:
-
-1. **Noodling** (done) -- 5 idea sketches, 10 decision points, 8 explorations. Settled the "what is this thing?" question.
-2. **Protocol design** (done) -- 9 design questions (DQ0-DQ8) worked through sequentially. Research-grounded: 7+ academic papers and industry sources cited.
-3. **Build** (done) -- PROTOCOL.md, RUBRICS.md, README.md written. Blank-slate testing with Haiku passed (3/3). Self-dogfooding complete.
-4. **Rubric redesign** (done) -- Rubrics had a new-doc bias (measured completeness, couldn't detect problems). Reframed questions toward value-added, boosted `current` W:1→W:2, added universal penalty items (`code_restatement` -2, `contradictions` -3). Research-grounded (see `research/ai-doc-quality.md`).
+chat-spec solves the gap between "AI tools can generate code" and "AI tools generate *good* code for *your* project." The core bet: iterative, scored documentation tracking produces better AI context than one-shot generation or manual maintenance. The landscape research (`specs/landscape-research.md`) confirmed the scored-manifest-plus-iterative-improvement approach is novel.
 
 ## Gotchas
 
 - **The "product" is PROTOCOL.md, not code.** There is no src/, no tests/, no build system. Quality is measured by whether AI models follow the protocol correctly, not by unit tests.
-- **specs/ is overloaded.** `specs/` serves two purposes: (1) it holds chat-spec's own documentation (decisions, landscape research, development history) and (2) it is the default artifact directory name that the protocol tells *other projects* to use. These are separate concerns that happen to share a name.
-- **Development history is intentionally verbose.** The `specs/development-history/` tree has ~30 files from the noodling and design phases. These are kept for provenance, not for regular reading. The decisions.md file is the consolidated view.
+- **specs/ is overloaded.** `specs/` serves two purposes: (1) it holds chat-spec's own documentation and (2) it is the default artifact directory name that the protocol tells *other projects* to use. These are separate concerns that happen to share a name.
+- **Development history is intentionally verbose.** The `specs/development-history/` tree has ~30 files from the noodling and design phases. These are kept for provenance, not for regular reading.
+
+## Key Decisions
+
+| Decision | Choice | Why |
+|----------|--------|-----|
+| Protocol, not a tool | Markdown an AI reads | Zero install friction; works with any AI tool |
+| One artifact per session | Hard limit | Context windows fill up; quality degrades generating too much at once (ETH Zurich) |
+| YAML manifest, not JSON | `.chat-spec/manifest.yaml` | AIs read YAML more reliably for config; humans can edit it |
+| YES/NO weighted rubrics | Not Likert or LLM-as-judge | Binary scoring most reproducible across models ("Rubric Is All You Need", ACM ICER 2025) |
+| Ban restating code | Section 1 of PROTOCOL.md | Restated code *hurts* AI performance and increases cost 20%+ (ETH Zurich) |
+| 13 built-in types, 4 core | Not a blank slate | Opinionated defaults lower the "what do I write?" barrier; extensible |
+| Thin pointer in AI config | Append to CLAUDE.md/.cursorrules | Avoids cross-tool sync; each tool reads its own config |
+
+For the chronological decision log, see `specs/decisions.md`.
 
 ## How to "Build" and Test
 
-There is no build step. The deliverables are three markdown files at the project root:
+No installation, no dependencies, no build step. The deliverables are three markdown files at the project root:
 
 | File | Purpose | How to test |
 |------|---------|-------------|
@@ -41,13 +34,16 @@ There is no build step. The deliverables are three markdown files at the project
 | RUBRICS.md | Scoring rubrics for 13 artifact types | Score a known artifact and check for reproducibility across models. |
 | README.md | Human landing page | Does a developer understand what to do in under 60 seconds? |
 
-Blank-slate testing (step 4 in the build plan) is the closest thing to a test suite. Three scenarios were run with Haiku and all passed, with one fix applied (score scale clarification in the manifest schema).
+Blank-slate testing is the closest thing to a test suite. Three scenarios were run with Haiku and all passed.
+
+## History
+
+See `specs/development-history/README.md` for the five development phases and their outcomes.
+
+## Team
+
+Solo maintainer project. No code review or approval process — changes land on `main` directly.
 
 ## Roadmap
 
-Remaining work:
-
-1. ~~Dogfood chat-spec on itself~~ (done — multiple sessions, all 4 core artifacts at 4-5/5)
-2. ~~Rubric redesign~~ (done — phase 04, penalty items and reframed questions)
-3. Dogfood on other real projects — the real validation that the protocol works outside its own repo
-4. ~~Final polish~~ (done — token budget audit, YAML schema validation, cross-reference check)
+- Dogfood on other real projects — the real validation that the protocol works outside its own repo

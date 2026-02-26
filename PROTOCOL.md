@@ -18,6 +18,10 @@ Every session:
 4. After any changes → update the manifest
 5. Before ending → summarise what was done and what's next
 
+## Guidance
+
+Reference material for writing better documentation lives in the [guidance directory](https://github.com/tfLConsulting/chat-spec/tree/main/guidance). See [guidance/INDEX.md](https://github.com/tfLConsulting/chat-spec/blob/main/guidance/INDEX.md) for available guides. These are not scored artifacts — they are research-distilled principles to apply when writing or evaluating specs.
+
 ## 1. Writing Effective Specs
 
 Before evaluating or generating anything, understand what makes documentation useful to AI tools. Research shows that LLM-generated documentation which restates what's already in the code **actively hurts AI performance** and increases cost.
@@ -478,3 +482,17 @@ The pointer in `CLAUDE.md` / `.cursorrules` / etc. enables automatic discovery. 
 3. **Check before writing.** If the delimiters already exist, do not duplicate.
 4. **Keep it minimal.** 2-3 lines. The protocol and manifest are elsewhere.
 5. **User can delete it.** Chat-spec still works if manually invoked.
+
+## 10. Keeping chat-spec Current
+
+**Repository:** https://github.com/tfLConsulting/chat-spec
+
+On first run, the protocol caches itself and RUBRICS.md into `.chat-spec/` (see section 3, step 4). These cached copies pin the version for consistent scoring.
+
+**To update:** If the user asks to update chat-spec to the latest version:
+
+1. Delete `.chat-spec/protocol.md` and `.chat-spec/rubrics.md`
+2. Fetch the current versions from the repository and save them to `.chat-spec/`
+3. Re-read the updated protocol before continuing
+
+**Do NOT rewrite these files from memory.** Always fetch from the repository URL above. If you cannot access the network, tell the user to manually copy the latest files from the repo into `.chat-spec/`.
