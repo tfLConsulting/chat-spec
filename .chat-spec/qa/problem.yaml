@@ -32,7 +32,7 @@ questions:
   - id: why-existing-fail
     question: "Why do existing approaches to AI project documentation fall short?"
     difficulty: medium
-    answer: "Manual maintenance of AI config files (CLAUDE.md, .cursorrules) is a chore nobody does consistently. One-shot documentation generation produces docs that restate code (which ETH Zurich research shows actually hurts AI performance by ~3% and increases cost 20%+). No existing tool combines scored evaluation with iterative improvement — the scored-manifest-plus-iterative-improvement approach is novel."
+    answer: "Manual maintenance of AI config files (CLAUDE.md, .cursorrules) is a chore nobody does consistently. One-shot documentation generation produces docs that restate code (which ETH Zurich research shows hurts AI performance by 2-3%). LLM-generated context files also increase inference cost by 20%+. No existing tool combines scored evaluation with iterative improvement — the scored-manifest-plus-iterative-improvement approach is novel."
     required_facts:
       - "Manual maintenance doesn't get done consistently"
       - "One-shot generation produces low-quality output"

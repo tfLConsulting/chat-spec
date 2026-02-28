@@ -31,7 +31,7 @@ questions:
   - id: research-location
     question: "Where is the research and what does it cover?"
     difficulty: easy
-    answer: "The research/ directory at the project root. It contains: topic-specific research files (ai-doc-quality, architecture, conventions, data model, deployment, dev-context, features, API docs, claude-md best practices) and a tools/ subdirectory with landscape research on 15+ existing tools (SDD tools, repo packers, AI config formats, doc quality tools). Also includes academic-papers.md summarising key findings."
+    answer: "The research/ directory at the project root. It contains: topic-specific research files (ai-doc-quality, architecture-specs, conventions-specs, data-model-specs, deployment-specs, dev-context, features-specs, api-docs-specs, claude-md-best-practices) and a research/tools/ subdirectory with landscape research on 17+ tools plus AI config format surveys and academic-papers.md summarising key findings from ETH Zurich, Canterbury, and others."
     required_facts:
       - "research/ directory at project root"
       - "Topic-specific research files"
@@ -56,10 +56,10 @@ questions:
   - id: development-history
     question: "Where is the development history and why is it there?"
     difficulty: easy
-    answer: "specs/development-history/ contains ~30 files from the noodling, design, and build phases. It has its own README.md explaining the five development phases. This is intentionally verbose — kept for provenance and understanding design decisions, not for regular reading. It's in specs/ because that directory is overloaded in this repo (holds both chat-spec's own docs and is the default artifact directory name)."
+    answer: "specs/development-history/ contains ~38 files across 11 phase directories (01-noodling through 10-api-docs-guidance). It has its own README.md. This is intentionally verbose — kept for provenance and understanding design decisions, not for regular reading. It's in specs/ because that directory is overloaded in this repo (holds both chat-spec's own docs and is the default artifact directory name)."
     required_facts:
       - "specs/development-history/"
-      - "~30 files across multiple phases"
+      - "~38 files across 11 phase directories"
       - "Kept for provenance, not regular reading"
       - "Intentionally verbose"
     red_flags:

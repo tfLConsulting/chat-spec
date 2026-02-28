@@ -59,10 +59,10 @@ questions:
   - id: penalize-restatement
     question: "Why does chat-spec penalize restating code in documentation?"
     difficulty: medium
-    answer: "ETH Zurich research found that AI-generated documentation that restates what code already expresses actually hurts AI performance by approximately 3% and increases inference cost by 20%+. Restating code is not just unhelpful — it's actively harmful. chat-spec's rubrics include a universal penalty item (code_restatement, -2 points) to catch this."
+    answer: "ETH Zurich research found that LLM-generated context files that restate what code already expresses decrease AI performance by 2-3% and increase inference cost by 20%+. Restating code is not just unhelpful — it's actively harmful. chat-spec's rubrics include a universal penalty item (code_restatement, -2 points) to catch this."
     required_facts:
       - "Restating code actively hurts AI performance"
-      - "Research quantified the harm (~3% performance drop, 20%+ cost increase)"
+      - "Research quantified the harm (2-3% performance drop, 20%+ cost increase)"
       - "ETH Zurich research"
       - "Universal penalty item in all rubrics"
     red_flags:
@@ -86,9 +86,9 @@ questions:
   - id: research-first
     question: "Why did the project take a research-first approach before building anything?"
     difficulty: hard
-    answer: "Before building, the team surveyed 25+ existing tools across SDD tools, codebase-to-context packers, AI config formats, and doc quality tools. The goal was: if something popular already does what we want, adopt it instead. The research confirmed that the scored-manifest-plus-iterative-improvement approach is novel — no existing tool combines evaluation with iterative improvement. This justified building rather than adopting."
+    answer: "Before building, the maintainer surveyed 30+ entries across SDD tools, codebase-to-context packers, AI config formats, and doc quality tools. The goal was: if something popular already does what we want, adopt it instead. The research confirmed that the scored-manifest-plus-iterative-improvement approach is novel — no existing tool combines evaluation with iterative improvement. This justified building rather than adopting."
     required_facts:
-      - "Surveyed 25+ existing tools"
+      - "Surveyed 30+ tools and config formats"
       - "Checked if existing tool could be adopted instead"
       - "Confirmed the approach is novel"
       - "Research is preserved in the research/ directory"

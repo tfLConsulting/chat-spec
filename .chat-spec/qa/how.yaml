@@ -22,9 +22,9 @@ questions:
   - id: subsequent-run
     question: "What happens on subsequent runs of chat-spec?"
     difficulty: medium
-    answer: "The AI reads .chat-spec/manifest.yaml (using the cached protocol, not the full protocol again). It checks for staleness via git log or file mtime. It picks the highest-priority gap using the priority order: broken > missing > low-scoring > stale > backlog. It presents options to the user, who picks one. The AI then reads the detail file and artifact, evaluates against the rubric, identifies failing items, proposes improvements for user approval, generates/improves the artifact, re-evaluates, and updates the manifest and detail file."
+    answer: "The AI reads .chat-spec/manifest.yaml and uses the cached protocol/rubrics from .chat-spec/ (not re-fetching from the network). It checks for staleness via git log or file mtime. It picks the highest-priority gap using the priority order: broken > missing > low-scoring > stale > backlog. It presents options to the user, who picks one. The AI then reads the detail file and artifact, evaluates against the rubric, identifies failing items, proposes improvements for user approval, generates/improves the artifact, re-evaluates, and updates the manifest and detail file."
     required_facts:
-      - "Reads manifest first (not full protocol)"
+      - "Reads manifest first, uses cached protocol locally"
       - "Checks for staleness"
       - "Prioritises by: broken > missing > low-scoring > stale > backlog"
       - "User picks what to work on"

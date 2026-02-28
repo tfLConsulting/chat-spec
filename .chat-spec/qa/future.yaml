@@ -43,7 +43,7 @@ questions:
   - id: maturity-assessment
     question: "How mature is chat-spec? Would you recommend it for a production codebase?"
     difficulty: hard
-    answer: "chat-spec is early-stage (v0.1). It has been designed with research rigour (25+ tools surveyed, academic papers informing key decisions), blank-slate tested with Haiku (3 scenarios passed), and dogfooded on itself (all 4 core artifacts at 5/5). However, it has not been tested on external projects, cross-model reproducibility is unverified, and it's a solo maintainer project. It's ready for experimentation on real projects — that's the next validation step — but calling it production-ready would be premature."
+    answer: "chat-spec is early-stage (v0.1). It has been designed with research rigour (30+ tools and formats surveyed, academic papers informing key decisions), blank-slate tested with Haiku (3 scenarios passed), and dogfooded on itself (all 4 core artifacts at 5/5). However, it has not been tested on external projects, cross-model reproducibility is unverified, and it's a solo maintainer project. It's ready for experimentation on real projects — that's the next validation step — but calling it production-ready would be premature."
     required_facts:
       - "Early stage, v0.1"
       - "Research-grounded design"

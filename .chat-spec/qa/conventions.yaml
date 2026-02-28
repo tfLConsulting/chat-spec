@@ -67,7 +67,7 @@ questions:
   - id: score-display
     question: "How should artifact scores be stored and displayed?"
     difficulty: easy
-    answer: "Scores are stored as display levels 1-5, never as raw totals. Raw totals vary by rubric type (14-18 max points), so levels normalise across artifact types. The manifest stores the mapped level. This means a score of 5 for architecture (max 18 points) and a score of 5 for features (max 17 points) are comparable."
+    answer: "Scores are stored as display levels 1-5, never as raw totals. Raw totals vary by rubric type (15-18 max points), so levels normalise across artifact types. The manifest stores the mapped level. This means a score of 5 for architecture (max 18 points) and a score of 5 for features (max 17 points) are comparable."
     required_facts:
       - "Display levels 1-5 only"
       - "Never raw totals"
