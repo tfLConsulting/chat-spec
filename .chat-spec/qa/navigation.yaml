@@ -1,0 +1,108 @@
+category: navigation
+description: "Tests whether an AI can find things in the repo — a proxy for how well the structure communicates"
+
+questions:
+  - id: core-deliverables-location
+    question: "Where are the core deliverables of chat-spec located?"
+    difficulty: easy
+    answer: "At the project root: PROTOCOL.md (the protocol), RUBRICS.md (scoring rubrics), and README.md (human landing page). They live at the root because they are the project — these files are what get distributed."
+    required_facts:
+      - "Project root"
+      - "PROTOCOL.md, RUBRICS.md, README.md"
+    red_flags:
+      - "In the specs/ directory"
+      - "In the .chat-spec/ directory"
+      - "In a dist/ or build/ directory"
+
+  - id: persistent-state
+    question: "Where is the persistent state stored and what does it contain?"
+    difficulty: easy
+    answer: "In the .chat-spec/ directory. manifest.yaml holds summary state (project info, artifact scores, status, top 10 backlog, last 5 log entries). artifacts/*.yaml files hold per-artifact detail (full checklist results, complete backlog). protocol.md and rubrics.md are cached copies of the scoring versions. This directory is committed to git so team members share scoring state."
+    required_facts:
+      - ".chat-spec/ directory"
+      - "manifest.yaml for summary"
+      - "artifacts/*.yaml for detail"
+      - "Cached protocol and rubrics copies"
+      - "Committed to git"
+    red_flags:
+      - "State is stored externally"
+      - "State is in the specs/ directory"
+
+  - id: research-location
+    question: "Where is the research and what does it cover?"
+    difficulty: easy
+    answer: "The research/ directory at the project root. It contains: topic-specific research files (ai-doc-quality, architecture, conventions, data model, deployment, dev-context, features, API docs, claude-md best practices) and a tools/ subdirectory with landscape research on 15+ existing tools (SDD tools, repo packers, AI config formats, doc quality tools). Also includes academic-papers.md summarising key findings."
+    required_facts:
+      - "research/ directory at project root"
+      - "Topic-specific research files"
+      - "tools/ subdirectory for landscape research"
+    red_flags:
+      - "Research is in the specs/ directory"
+      - "No research exists"
+
+  - id: guidance-location
+    question: "Where are the guidance documents and how are they organised?"
+    difficulty: easy
+    answer: "The guidance/ directory at the project root. INDEX.md provides a directory of all guides. Each guide covers one topic: ai-doc-quality.md (core principles), architecture-specs.md, conventions.md, data-model.md, deployment.md, dev-context.md, api-docs.md, claude-md.md, features.md. The recipe for creating new guides is at specs/guidance-recipe.md."
+    required_facts:
+      - "guidance/ directory"
+      - "INDEX.md as the directory"
+      - "One file per topic"
+      - "Recipe at specs/guidance-recipe.md"
+    red_flags:
+      - "Guidance is embedded in the protocol"
+      - "Guidance is in the research/ directory"
+
+  - id: development-history
+    question: "Where is the development history and why is it there?"
+    difficulty: easy
+    answer: "specs/development-history/ contains ~30 files from the noodling, design, and build phases. It has its own README.md explaining the five development phases. This is intentionally verbose — kept for provenance and understanding design decisions, not for regular reading. It's in specs/ because that directory is overloaded in this repo (holds both chat-spec's own docs and is the default artifact directory name)."
+    required_facts:
+      - "specs/development-history/"
+      - "~30 files across multiple phases"
+      - "Kept for provenance, not regular reading"
+      - "Intentionally verbose"
+    red_flags:
+      - "Development history should be regularly consulted"
+      - "It's auto-generated"
+
+  - id: find-api-rubric
+    question: "Where would you find the scoring rubric for API documentation?"
+    difficulty: medium
+    answer: "In RUBRICS.md at the project root. The 4 core rubrics (architecture, features, conventions, dev-context) are in both PROTOCOL.md and RUBRICS.md. The 9 specialised rubrics (including API docs) are only in RUBRICS.md — they're kept separate to keep the protocol under its 16KB budget. The AI only loads RUBRICS.md when working on a specialised artifact type."
+    required_facts:
+      - "RUBRICS.md at project root"
+      - "Specialised rubrics only in RUBRICS.md, not PROTOCOL.md"
+      - "Separated to keep protocol small"
+    red_flags:
+      - "In the protocol file"
+      - "In the .chat-spec/ directory"
+      - "API docs don't have a rubric"
+
+  - id: directory-purposes
+    question: "What is the purpose of each top-level directory in chat-spec?"
+    difficulty: medium
+    answer: "Root files (PROTOCOL.md, RUBRICS.md, README.md) — the distributed product. .chat-spec/ — tracking state (manifest, artifacts, cached protocol). specs/ — generated documentation artifacts and project docs (overloaded in this repo). specs/development-history/ — design provenance (verbose, for reference). guidance/ — research-distilled writing guides. research/ — landscape and topic research. Each has a clear boundary and purpose."
+    required_facts:
+      - "Root = product/deliverables"
+      - ".chat-spec/ = tracking state"
+      - "specs/ = generated artifacts"
+      - "guidance/ = writing guides"
+      - "research/ = landscape/topic research"
+    red_flags:
+      - "All documentation is in one directory"
+      - "The directories serve overlapping purposes"
+
+  - id: scenario-find-design-rationale
+    question: "A developer asks 'why did you choose binary scoring?' — where in the repo would you find the answer?"
+    difficulty: medium
+    answer: "Multiple places, reflecting different levels of detail: (1) specs/dev-context.md has the key decisions table with a one-line rationale. (2) specs/decisions.md has the chronological decision log with more context about the rubric redesign. (3) research/ai-doc-quality.md has the evidence base. (4) specs/development-history/ has the original design explorations. The most efficient path is dev-context.md first, then decisions.md if more detail is needed."
+    required_facts:
+      - "specs/dev-context.md for the quick answer"
+      - "specs/decisions.md for more context"
+      - "research/ for the evidence base"
+      - "Multiple locations at different detail levels"
+    red_flags:
+      - "Only in one place"
+      - "Not documented anywhere"
+      - "In the PROTOCOL.md"

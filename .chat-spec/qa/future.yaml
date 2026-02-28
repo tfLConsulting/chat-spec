@@ -1,0 +1,56 @@
+category: future
+description: "Tests whether an AI understands what's planned, what's incomplete, and what hasn't been validated"
+
+questions:
+  - id: current-version
+    question: "What version is chat-spec currently at?"
+    difficulty: easy
+    answer: "Protocol version 0.1, as recorded in the manifest (protocol_version: '0.1'). This is the first version — the protocol has been built, dogfooded on itself, and blank-slate tested, but not yet validated on external projects."
+    required_facts:
+      - "Version 0.1"
+      - "First version"
+      - "Not yet validated externally"
+    red_flags:
+      - "Version 1.0 or later"
+      - "Stable/production release"
+
+  - id: roadmap
+    question: "What's on the chat-spec roadmap?"
+    difficulty: easy
+    answer: "The primary roadmap item is dogfooding on other real projects — this is the real validation that the protocol works outside its own repo. The protocol has only been tested on itself so far."
+    required_facts:
+      - "Dogfood on real projects"
+      - "Validates the protocol generalises"
+      - "Only tested on itself so far"
+    red_flags:
+      - "Building a CLI or tool"
+      - "Adding a web interface"
+      - "Expanding to dozens of artifact types"
+
+  - id: unvalidated
+    question: "What aspects of chat-spec haven't been validated yet?"
+    difficulty: medium
+    answer: "Several things remain unvalidated: (1) Cross-model reproducibility — scoring the same artifact with different AI models to confirm scores are within 1 level. (2) Dogfooding on external projects — proving the protocol works on real codebases beyond chat-spec itself. (3) Custom artifact types — shipped but explicitly marked as untested. (4) The protocol working across different AI tools (Cursor, Copilot) — currently only tested with Claude."
+    required_facts:
+      - "Cross-model reproducibility not formally tested"
+      - "Not tested on external projects"
+      - "Custom types shipped but untested"
+    red_flags:
+      - "Everything has been validated"
+      - "Extensively tested across models"
+      - "Used on many external projects"
+
+  - id: maturity-assessment
+    question: "How mature is chat-spec? Would you recommend it for a production codebase?"
+    difficulty: hard
+    answer: "chat-spec is early-stage (v0.1). It has been designed with research rigour (25+ tools surveyed, academic papers informing key decisions), blank-slate tested with Haiku (3 scenarios passed), and dogfooded on itself (all 4 core artifacts at 5/5). However, it has not been tested on external projects, cross-model reproducibility is unverified, and it's a solo maintainer project. It's ready for experimentation on real projects — that's the next validation step — but calling it production-ready would be premature."
+    required_facts:
+      - "Early stage, v0.1"
+      - "Research-grounded design"
+      - "Tested on itself but not external projects"
+      - "Solo maintainer"
+      - "Ready for experimentation, not production"
+    red_flags:
+      - "Production-ready"
+      - "Widely adopted"
+      - "Battle-tested"
