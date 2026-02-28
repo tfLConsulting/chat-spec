@@ -1,0 +1,125 @@
+category: how
+description: "Tests whether an AI understands the mechanics — how chat-spec actually works"
+
+questions:
+  - id: first-run
+    question: "Walk through what happens on a first run of chat-spec."
+    difficulty: medium
+    answer: "User invokes 'run chat-spec' (or pastes the protocol URL). The AI reads PROTOCOL.md, scans the project (docs, config, code structure, git history), and proposes a manifest to the user. After user approval, the AI creates the .chat-spec/ directory (manifest, detail files, cached copies of protocol and rubrics), generates ONE artifact into the specs/ directory, evaluates that artifact against its rubric, writes the score to the manifest, and appends a 3-line discovery pointer to the AI config file (CLAUDE.md/.cursorrules). Takes 5-10 minutes."
+    required_facts:
+      - "AI reads the protocol first"
+      - "Scans the project"
+      - "Proposes manifest for user approval"
+      - "Creates .chat-spec/ directory with state files"
+      - "Generates exactly one artifact"
+      - "Evaluates and scores the artifact"
+      - "Appends pointer to AI config"
+    red_flags:
+      - "Generates all documentation at once"
+      - "Runs without user approval"
+      - "Creates a database or external state"
+
+  - id: subsequent-run
+    question: "What happens on subsequent runs of chat-spec?"
+    difficulty: medium
+    answer: "The AI reads .chat-spec/manifest.yaml and uses the cached protocol/rubrics from .chat-spec/ (not re-fetching from the network). It checks for staleness via git log or file mtime. It picks the highest-priority gap using the priority order: broken > missing > low-scoring > stale > backlog. It presents options to the user, who picks one. The AI then reads the detail file and artifact, evaluates against the rubric, identifies failing items, proposes improvements for user approval, generates/improves the artifact, re-evaluates, and updates the manifest and detail file."
+    required_facts:
+      - "Reads manifest first, uses cached protocol locally"
+      - "Checks for staleness"
+      - "Prioritises by: broken > missing > low-scoring > stale > backlog"
+      - "User picks what to work on"
+      - "Re-evaluates after generation"
+    red_flags:
+      - "Re-reads the full protocol every time"
+      - "Automatically picks what to improve"
+      - "Updates multiple artifacts per session"
+
+  - id: scoring-mechanics
+    question: "How does the rubric scoring system work?"
+    difficulty: medium
+    answer: "Each artifact type has a rubric with positive items (weighted 1-3 points, scored YES or NO) and two universal penalty items (code_restatement -2, contradictions -3). Score = sum of YES positive weights minus sum of YES penalty weights, clamped at 0. The raw total is then mapped to a display level 1-5 using type-specific thresholds. Only the display level is stored in the manifest, never the raw total."
+    required_facts:
+      - "Positive items weighted 1-3 points"
+      - "Binary YES/NO scoring"
+      - "Two universal penalty items (restatement and contradictions)"
+      - "Raw score mapped to display level 1-5"
+      - "Only display level stored, not raw total"
+    red_flags:
+      - "Uses percentage scores"
+      - "Uses Likert scales"
+      - "All items have equal weight"
+      - "Raw totals are stored in the manifest"
+
+  - id: state-management
+    question: "How does chat-spec maintain state across sessions?"
+    difficulty: easy
+    answer: "All state lives in flat files in the .chat-spec/ directory: manifest.yaml holds summary state (scores, top 10 backlog items, last 5 log entries), and artifacts/*.yaml files hold per-artifact detail (full checklist results, complete backlog). There's no database, no API, no cloud storage. Git is the recommended sync mechanism. Each session is stateless except through these files — there's no chat history or thread ID."
+    required_facts:
+      - "Flat files in .chat-spec/ directory"
+      - "manifest.yaml for summary state"
+      - "artifacts/*.yaml for per-artifact detail"
+      - "No database or external storage"
+      - "Sessions are stateless except through files"
+    red_flags:
+      - "Uses a database"
+      - "Maintains chat history"
+      - "Requires cloud storage"
+
+  - id: staleness-detection
+    question: "How does staleness detection work?"
+    difficulty: medium
+    answer: "chat-spec checks git log (or falls back to file modification times if git is unavailable) to see if source code has changed since the artifact was last evaluated. If code changed, the artifact is marked 'stale'. Important: stale doesn't mean wrong — the docs might still be accurate. The AI must re-evaluate to determine if the artifact is actually broken or just needs a fresh score."
+    required_facts:
+      - "Uses git log or file mtime as signals"
+      - "Compares code changes against last evaluation date"
+      - "Stale means 'needs re-evaluation', not 'wrong'"
+      - "Falls back to file mtime if git unavailable"
+    red_flags:
+      - "Stale means the docs are wrong"
+      - "Staleness is determined by time elapsed"
+      - "Only works with git"
+
+  - id: guidance-layer
+    question: "What role does the guidance layer play in chat-spec?"
+    difficulty: hard
+    answer: "The guidance/ directory contains research-distilled writing guides that help AI tools produce better documentation. Each guide covers a specific artifact type (architecture, conventions, features, etc.) and distils findings from landscape research into actionable rules — what to include, what to omit, common mistakes. The core guide (ai-doc-quality.md) establishes principles that apply to all specs: no code restatement, front-load non-obvious information, 1-3KB target. Guides are created following the recipe in specs/guidance-recipe.md."
+    required_facts:
+      - "Research-distilled writing guides"
+      - "Help AI produce better documentation"
+      - "One guide per artifact type"
+      - "Core guide covers universal quality principles"
+      - "Created via a standardised recipe"
+    red_flags:
+      - "Guidance is for human writers only"
+      - "The guidance directory is auto-generated"
+      - "Guidance replaces the rubrics"
+
+  - id: protocol-distribution
+    question: "How does the protocol get distributed and discovered by AI tools?"
+    difficulty: medium
+    answer: "Three entry points: (1) URL paste — user pastes the PROTOCOL.md GitHub URL into any AI chat for a cold start. (2) AI config pointer — a 3-line section in CLAUDE.md or .cursorrules points to the cached protocol copy in .chat-spec/. This is discovered automatically when the AI reads its config. (3) Direct invocation — user says 'run chat-spec' and the AI finds the pointer or manifest. All three converge to: read manifest (if exists) then follow protocol."
+    required_facts:
+      - "Three entry points: URL paste, config pointer, direct invocation"
+      - "Config pointer is auto-discovered"
+      - "Protocol is cached locally in .chat-spec/"
+      - "All entry points converge to the same flow"
+    red_flags:
+      - "Requires installation or package manager"
+      - "Only works through URL pasting"
+      - "Must be manually configured each session"
+
+  - id: scenario-improve-architecture
+    question: "If a user said 'my architecture docs are outdated', what steps would chat-spec follow?"
+    difficulty: hard
+    answer: "The AI would: (1) read .chat-spec/manifest.yaml to check the architecture artifact's current score and status, (2) read .chat-spec/artifacts/architecture.yaml for the detailed checklist, (3) read specs/architecture.md (the current artifact), (4) re-evaluate against the architecture rubric, identifying which items now fail, (5) present the failing items sorted by weight to the user, (6) after user approval, improve the artifact targeting the highest-weight failing items, (7) re-evaluate to confirm the score improved, (8) update the manifest and detail file with new scores."
+    required_facts:
+      - "Reads manifest and detail file first"
+      - "Re-evaluates against the rubric"
+      - "Identifies specific failing items"
+      - "Gets user approval before changing anything"
+      - "Re-evaluates after improvement"
+      - "Updates state files"
+    red_flags:
+      - "Regenerates the entire document from scratch"
+      - "Skips evaluation and just rewrites"
+      - "Makes changes without user approval"
