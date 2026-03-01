@@ -7,13 +7,19 @@ Future guidance files for the `guidance/` directory. Each follows the recipe at 
 | File | Covers |
 |------|--------|
 | `ai-doc-quality.md` | Foundational — what helps vs. hurts AI tools |
+| `api-docs.md` | Writing API documentation |
 | `architecture-specs.md` | Writing architecture docs |
 | `claude-md.md` | CLAUDE.md-specific patterns |
 | `conventions.md` | Writing conventions/patterns docs |
+| `data-model.md` | Writing data model specs |
+| `deployment.md` | Writing deployment specs |
 | `dev-context.md` | Dev-context files (CLAUDE.md, AGENTS.md, cursorrules) |
 | `features.md` | Writing feature specs |
+| `security.md` | Writing security specs |
+| `dependencies.md` | Writing dependency specs |
+| `design-system.md` | Writing design system specs |
 
-All four core artifact types now have guidance. Remaining tiers are specialized and architecture-specific.
+Tiers 1 and 2 complete. Tier 3 in progress.
 
 ## Tier 2 — Common Specialized Artifacts
 
@@ -67,8 +73,8 @@ Applies across all artifact types and architectures.
 
 ## Prioritisation Notes
 
-- **Tier 1 complete** — all four core artifact types have guidance.
-- **Next up: Tier 2** — pick based on which specialized artifacts your project tracks.
+- **Tiers 1 & 2 complete** — all four core artifacts and all four common specialized artifacts have guidance.
+- **Next up: Tier 3** — pick based on which specialized artifacts your project tracks.
 - **Tier 4 picks** — choose based on your project stack. A Firebase + Next.js monorepo would prioritise: `monorepo-docs.md`, `firebase-patterns.md`, `nextjs-specs.md`, `serverless-patterns.md`.
 - **One guide per session** — the recipe produces better output with focused research.
 - **Each guide is ~2KB** — expect 30-45 min per guide including research.

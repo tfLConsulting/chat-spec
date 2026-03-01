@@ -9,9 +9,12 @@ Reference material for writing better specs. These are not scored artifacts or r
 | [claude-md.md](claude-md.md) | Before writing or reviewing a CLAUDE.md file. Claude Code-specific patterns, layering strategy, sizing, what research says works. |
 | [conventions.md](conventions.md) | Before writing conventions/coding-standards specs. What belongs vs what linters handle, rule format, scaling strategy. |
 | [data-model.md](data-model.md) | Before writing data model specs. What agents discover from schemas vs. what to document — business terms, implicit relationships, denormalisation rationale, state machines. |
+| [design-system.md](design-system.md) | Before writing design system specs. What agents need to reuse components — manifests, prop types, variant rules, composition constraints, accessibility per component. |
+| [dependencies.md](dependencies.md) | Before writing dependency specs. What lockfiles already cover, what to add — selection rationale, banned alternatives, upgrade constraints, agent failure modes. |
 | [deployment.md](deployment.md) | Before writing deployment specs. What IaC already covers, what to add (environment decisions, manual steps, security invariants, rollback, monitoring thresholds). |
 | [dev-context.md](dev-context.md) | Before writing any dev-context file (CLAUDE.md, AGENTS.md, cursorrules). Progressive loading, what to include/exclude, building from failures. |
 | [api-docs.md](api-docs.md) | Before writing API documentation. What agents need beyond schemas — disambiguating descriptions, scopes per endpoint, examples, agent auth patterns. |
 | [features.md](features.md) | Before writing feature specs. What to document vs. what agents discover, status tracking, scope boundaries. |
+| [security.md](security.md) | Before writing security specs. What agents can't infer — permission models, trust boundaries, auth flow rationale, security invariants. |
 
 **Creating new guides:** Follow the recipe at [`specs/guidance-recipe.md`](../specs/guidance-recipe.md).
