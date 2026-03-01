@@ -91,6 +91,64 @@ Check if code has changed since last evaluation:
 - **Git (preferred):** `git log --since="<last_evaluated>" --name-only` — if relevant files changed, mark artifact as `stale`
 - **Fallback:** Compare file modification times against `last_evaluated`
 
+### Q&A evaluation (outcome-based)
+
+Rubric scoring measures whether individual specs follow good patterns — it's a **leading indicator**. Q&A evaluation measures whether an AI can actually understand the repo — it's an **outcome measure**. A repo with perfect rubric scores but poor structure might still fail Q&A. A repo with no specs but brilliant naming and architecture might pass.
+
+**The test:** Give a less capable model (e.g., Haiku) the repo with no pre-loaded context. Ask questions. Compare answers against ground truth. If Haiku gets it right from navigation alone, more capable models will too.
+
+#### Q&A collection
+
+Questions live in `.chat-spec/qa/`, one file per category:
+
+| Category | Tests whether AI understands... |
+|----------|-------------------------------|
+| problem | What this project solves and for whom |
+| scale | How big/complex it is, what's in and out of scope |
+| decisions | Why key choices were made, what trade-offs exist |
+| how | The mechanics — how things actually work |
+| future | What's planned, incomplete, or unvalidated |
+| navigation | Where things are — a proxy for structural clarity |
+| conventions | How to contribute correctly |
+
+Each question has:
+
+```yaml
+- id: short-identifier
+  question: "The question an evaluator asks"
+  difficulty: easy|medium|hard    # easy failures = structural problem
+  answer: "Canonical ground truth"
+  required_facts:                 # what a correct answer MUST convey
+    - "specific fact"
+  red_flags:                      # claims indicating hallucination
+    - "incorrect claim"
+```
+
+#### Writing Q&A
+
+Write questions a developer or AI would naturally ask. Range from easy (surface-level facts) to hard (requires synthesis or scenario reasoning). Include scenario-based questions ("if a user asked X, what would you do?") — these test whether the AI can act on understanding, not just recall facts.
+
+Ground truth must be precise and verifiable against the repo. Required facts should be specific enough to score but not so rigid they reject valid paraphrasing.
+
+#### Verification
+
+Before using Q&A for evaluation, verify the ground truth itself:
+
+1. **Verification pass:** A capable model in a fresh context (no prior conversation) reads each Q&A file and checks every claim against the actual repo. Fix errors in the Q&A.
+2. **Curiosity-first on divergences:** During evaluation, when the test model's answer differs from ground truth, investigate before scoring it wrong. The model may be right and the Q&A wrong — or the repo may be communicating something different from what was intended. Both are valuable findings.
+
+The verification pass catches obvious errors cheaply. Curiosity-first catches subtle errors AND creates a feedback loop into the repo itself — if Haiku consistently answers a question "wrong" in the same way, the repo may be clearly communicating that wrong thing.
+
+#### Scoring Q&A
+
+For each question:
+- **Correct:** Answer conveys all required_facts, no red_flags present
+- **Partial:** Some required_facts present, no red_flags
+- **Wrong:** Missing most required_facts OR red_flags present
+- **Hallucinated:** Red_flags present AND answer contains fabricated specifics
+
+Report scores by category and difficulty. Easy questions failing signals structural problems in the repo. Hard questions failing signals documentation gaps — which rubrics can help diagnose.
+
 ## 3. First Run
 
 No `.chat-spec/` directory exists. Follow these steps:
@@ -256,6 +314,10 @@ Before ending any session:
   artifacts/                  # per-artifact detail files
     architecture.yaml
     features.yaml
+    ...
+  qa/                         # Q&A evaluation collection
+    problem.yaml             # one file per category
+    scale.yaml
     ...
 ```
 

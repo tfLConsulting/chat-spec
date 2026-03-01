@@ -1,0 +1,87 @@
+category: problem
+description: "Tests whether an AI understands what problem this project solves, for whom, and why it matters"
+
+questions:
+  - id: core-problem
+    question: "What problem does chat-spec solve?"
+    difficulty: easy
+    answer: "AI tools work poorly with codebases that lack structured, accurate documentation. They guess at architecture, invent conventions, and hallucinate details. chat-spec is a protocol that guides AI tools to iteratively evaluate, score, and improve project documentation so AI can understand and work with the codebase reliably."
+    required_facts:
+      - "AI tools struggle without good project documentation"
+      - "chat-spec improves documentation quality"
+      - "It's iterative — improves over multiple sessions"
+      - "It scores/evaluates documentation, not just generates it"
+    red_flags:
+      - "It's a code generation tool"
+      - "It's a linter or static analysis tool"
+      - "It replaces or rewrites existing documentation"
+      - "It requires installation or dependencies"
+
+  - id: target-user
+    question: "Who is the target user of chat-spec?"
+    difficulty: easy
+    answer: "Developers using AI coding assistants (Claude Code, Cursor, GitHub Copilot, etc.) who want their AI tools to work more effectively with their codebase. The protocol is designed to work with any AI tool that can read a URL and write files."
+    required_facts:
+      - "Developers using AI coding assistants"
+      - "Works with multiple AI tools, not just one"
+    red_flags:
+      - "Only works with Claude"
+      - "Targets documentation writers or technical writers specifically"
+      - "Designed for non-technical users"
+
+  - id: why-existing-fail
+    question: "Why do existing approaches to AI project documentation fall short?"
+    difficulty: medium
+    answer: "Manual maintenance of AI config files (CLAUDE.md, .cursorrules) is a chore nobody does consistently. One-shot documentation generation produces docs that restate code (which ETH Zurich research shows hurts AI performance by 2-3%). LLM-generated context files also increase inference cost by 20%+. No existing tool combines scored evaluation with iterative improvement — the scored-manifest-plus-iterative-improvement approach is novel."
+    required_facts:
+      - "Manual maintenance doesn't get done consistently"
+      - "One-shot generation produces low-quality output"
+      - "Restating code in docs hurts AI performance (research-backed)"
+      - "No existing tool does scored iterative improvement"
+    red_flags:
+      - "Existing tools are too expensive"
+      - "The problem is lack of AI tools"
+      - "Documentation generators work well enough"
+
+  - id: core-insight
+    question: "What is the core bet or insight behind chat-spec?"
+    difficulty: medium
+    answer: "Iterative, scored documentation tracking produces better AI context than one-shot generation or manual maintenance. By scoring docs against rubrics and improving one artifact per session, quality ratchets up over time. The protocol explicitly avoids restating code — it focuses only on non-obvious information that adds genuine value for AI comprehension."
+    required_facts:
+      - "Iterative improvement over one-shot generation"
+      - "Scoring/evaluation drives improvement direction"
+      - "Focus on non-obvious information only"
+      - "Quality improves incrementally across sessions"
+    red_flags:
+      - "More documentation is always better"
+      - "The insight is about code quality, not documentation"
+      - "AI should generate all documentation at once"
+
+  - id: north-star
+    question: "What is the ultimate goal of chat-spec — what outcome does good documentation enable?"
+    difficulty: hard
+    answer: "AI code development becomes easy and reliable when an AI can fully understand a request, the context behind it, and generate a consistent outcome each time. chat-spec ensures there's enough structure and documentation to make that happen. The documentation and repo structure together form the 'spec' — it's not just about docs files, it's about the repo communicating clearly."
+    required_facts:
+      - "The goal is reliable, consistent AI code generation"
+      - "AI needs to understand both requests and their context"
+      - "Documentation and repo structure both contribute"
+      - "Consistency of outcomes is a key measure"
+    red_flags:
+      - "The goal is comprehensive documentation for humans"
+      - "The goal is to replace human code review"
+      - "Documentation is an end in itself"
+
+  - id: differentiation
+    question: "How is chat-spec different from other tools in the documentation/AI context space?"
+    difficulty: hard
+    answer: "chat-spec is a protocol (markdown an AI reads), not a tool (no CLI, no runtime, no dependencies). It combines scored evaluation with iterative improvement — no existing tool does this. Tools like Repomix/gitingest pack repos for context but don't evaluate quality. SDD tools like GitHub Spec Kit generate docs but don't score them. chat-spec's rubrics penalize code restatement and contradictions, backed by research showing these actively hurt AI performance."
+    required_facts:
+      - "Protocol, not a tool — no installation needed"
+      - "Combines scoring with iterative improvement (novel)"
+      - "Repo packers don't evaluate quality"
+      - "SDD tools don't score documentation"
+      - "Penalizes code restatement based on research"
+    red_flags:
+      - "It's similar to Repomix or gitingest"
+      - "It's an alternative to CLAUDE.md"
+      - "It competes with documentation generators"

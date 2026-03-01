@@ -1,0 +1,111 @@
+category: decisions
+description: "Tests whether an AI understands why key design choices were made and the trade-offs involved"
+
+questions:
+  - id: protocol-not-tool
+    question: "Why is chat-spec a protocol instead of a software tool?"
+    difficulty: medium
+    answer: "Zero install friction — it works with any AI tool that can read markdown. No version conflicts, no language constraints, no CLI to maintain. The protocol is the product: PROTOCOL.md is the program, the AI's context window is the execution environment, and the manifest is the database. This means any AI tool can execute it without integration work."
+    required_facts:
+      - "Zero installation friction"
+      - "Works with any AI tool"
+      - "No language or platform constraints"
+      - "The AI itself is the runtime"
+    red_flags:
+      - "They couldn't build a tool"
+      - "It will become a tool eventually"
+      - "Protocol is just a prototype approach"
+
+  - id: one-artifact-per-session
+    question: "Why does chat-spec limit generation to one artifact per session?"
+    difficulty: medium
+    answer: "Context windows fill up and quality degrades when generating too much at once. This is backed by ETH Zurich research showing AI-generated context that restates too much hurts performance. The limit is enforced even if the AI has remaining context capacity. It's intentional: slow and correct beats fast and wrong. Multiple sessions are needed for full coverage."
+    required_facts:
+      - "Quality degrades with volume in a single session"
+      - "Research-backed decision (ETH Zurich)"
+      - "Enforced even with remaining context"
+      - "Intentional trade-off: correctness over speed"
+    red_flags:
+      - "It's a technical limitation of context windows"
+      - "Users can override this limit"
+      - "It's a temporary constraint"
+
+  - id: yaml-not-json
+    question: "Why does chat-spec use YAML instead of JSON for the manifest?"
+    difficulty: medium
+    answer: "AIs read YAML more reliably for configuration data, and humans can edit it more easily. YAML supports comments (useful for the manifest's role as human-readable state). Keys use lowercase-with-hyphens following YAML ecosystem norms."
+    required_facts:
+      - "AIs read YAML more reliably for config"
+      - "Humans can edit it more easily"
+    red_flags:
+      - "JSON would work just as well"
+      - "YAML was chosen arbitrarily"
+
+  - id: binary-scoring
+    question: "Why does chat-spec use binary YES/NO scoring instead of Likert scales?"
+    difficulty: medium
+    answer: "Binary scoring is the most reproducible across different AI models. Likert scales and LLM-as-judge approaches produce inconsistent results — one model's 3/5 is another's 4/5. YES/NO removes this ambiguity. 'Partially met' is always scored as NO. The loss of granularity is mitigated by weighting different rubric items (1-3 points each). This is grounded in 'Rubric Is All You Need' (ACM ICER 2025)."
+    required_facts:
+      - "Reproducibility across different AI models"
+      - "Likert scales produce inconsistent results"
+      - "Partially met counts as NO"
+      - "Weights provide granularity instead"
+      - "Research-backed (ACM ICER 2025)"
+    red_flags:
+      - "Binary scoring is simpler to implement"
+      - "Likert scales would be better but harder"
+      - "There's no research basis for this"
+
+  - id: penalize-restatement
+    question: "Why does chat-spec penalize restating code in documentation?"
+    difficulty: medium
+    answer: "ETH Zurich research found that LLM-generated context files that restate what code already expresses decrease AI performance by 2-3% and increase inference cost by 20%+. Restating code is not just unhelpful — it's actively harmful. chat-spec's rubrics include a universal penalty item (code_restatement, -2 points) to catch this."
+    required_facts:
+      - "Restating code actively hurts AI performance"
+      - "Research quantified the harm (2-3% performance drop, 20%+ cost increase)"
+      - "ETH Zurich research"
+      - "Universal penalty item in all rubrics"
+    red_flags:
+      - "It's about avoiding redundancy for readability"
+      - "It's a style preference"
+      - "Code restatement is just discouraged, not penalized"
+
+  - id: thin-pointer
+    question: "Why does chat-spec use a thin 3-line pointer in AI config files instead of embedding full configuration?"
+    difficulty: medium
+    answer: "Syncing between different AI config files (CLAUDE.md, .cursorrules, etc.) is an unsolvable problem — each tool evolves independently. chat-spec only appends a small discovery pointer inside HTML delimiters. Each tool reads its own config; chat-spec doesn't try to manage cross-tool config. This avoids the sync problem entirely."
+    required_facts:
+      - "Cross-tool config sync is intractable"
+      - "Only appends a small pointer, doesn't manage config"
+      - "Uses HTML delimiters for the pointer section"
+      - "Each tool maintains its own config"
+    red_flags:
+      - "Full config would be too large"
+      - "They plan to add full config sync later"
+
+  - id: research-first
+    question: "Why did the project take a research-first approach before building anything?"
+    difficulty: hard
+    answer: "Before building, the maintainer surveyed 30+ entries across SDD tools, codebase-to-context packers, AI config formats, and doc quality tools. The goal was: if something popular already does what we want, adopt it instead. The research confirmed that the scored-manifest-plus-iterative-improvement approach is novel — no existing tool combines evaluation with iterative improvement. This justified building rather than adopting."
+    required_facts:
+      - "Surveyed 30+ tools and config formats"
+      - "Checked if existing tool could be adopted instead"
+      - "Confirmed the approach is novel"
+      - "Research is preserved in the research/ directory"
+    red_flags:
+      - "Research was done after building"
+      - "They didn't look at existing tools"
+      - "Research was purely academic"
+
+  - id: rubric-redesign
+    question: "Why were the rubrics redesigned to include penalty items?"
+    difficulty: hard
+    answer: "The original rubrics measured completeness — good for new docs but blind to problems in existing docs. Verbosity, staleness, and code restatement all scored well under the old system. The redesign added universal penalty items (code_restatement -2, contradictions -3) and boosted the 'current' item weight from 1 to 2. This shifted rubrics from measuring 'is it complete?' to 'does it add value?'"
+    required_facts:
+      - "Original rubrics only measured completeness"
+      - "Couldn't detect problems in existing docs"
+      - "Added penalty items for restatement and contradictions"
+      - "Shifted from completeness to value-added"
+    red_flags:
+      - "Penalties were always part of the design"
+      - "Redesign was cosmetic"

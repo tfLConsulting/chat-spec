@@ -1,0 +1,107 @@
+category: conventions
+description: "Tests whether an AI would follow the right patterns when contributing to this project"
+
+questions:
+  - id: yaml-key-naming
+    question: "How should YAML keys be named in chat-spec files?"
+    difficulty: easy
+    answer: "Lowercase with hyphens for spaces (e.g., dev-context, api-docs, design-system). This follows YAML ecosystem norms and is distinct from rubric item IDs which use underscores."
+    required_facts:
+      - "Lowercase with hyphens"
+      - "Examples: dev-context, api-docs"
+    red_flags:
+      - "camelCase"
+      - "Underscores for keys"
+      - "PascalCase"
+
+  - id: rubric-id-naming
+    question: "How should rubric item IDs be named?"
+    difficulty: easy
+    answer: "Lowercase with underscores (e.g., non_obvious, core_features, data_flow, code_restatement). This is intentionally different from YAML keys (which use hyphens) because item IDs appear in checklist references where underscores read better as identifiers."
+    required_facts:
+      - "Lowercase with underscores"
+      - "Intentionally different from YAML keys"
+    red_flags:
+      - "Same convention as YAML keys (hyphens)"
+      - "camelCase"
+
+  - id: most-important-convention
+    question: "What is the single most important convention for writing specs in chat-spec?"
+    difficulty: medium
+    answer: "Every statement must earn its place. Before writing a line, ask: 'Would an AI infer this correctly from the code alone?' If yes, delete it. This is grounded in ETH Zurich research showing AI-generated docs that restate code hurt performance and increase cost. Concretely: front-load the non-obvious, no boilerplate preamble, specific headings, 1-3KB per artifact, lists and tables over prose."
+    required_facts:
+      - "Every statement must earn its place"
+      - "Don't restate what AI can infer from code"
+      - "Research-backed (ETH Zurich)"
+      - "1-3KB target per artifact"
+    red_flags:
+      - "Be comprehensive and thorough"
+      - "Document everything"
+      - "More detail is always better"
+
+  - id: anti-patterns
+    question: "What are the anti-patterns to avoid when working on chat-spec?"
+    difficulty: medium
+    answer: "Seven anti-patterns: (1) Don't restate code/config in specs — the #1 quality killer. (2) Don't generate multiple artifacts per session. (3) Don't invent answers — ask the user if info is missing. (4) Don't score on Likert scales — binary YES/NO only. (5) Don't put full backlogs in the manifest — top 10 only. (6) Don't overwrite AI config files — read first, append inside delimiters. (7) Don't skip the user approval step."
+    required_facts:
+      - "No code restatement (most important)"
+      - "One artifact per session"
+      - "Don't invent answers"
+      - "Binary scoring only"
+      - "Always get user approval"
+    red_flags:
+      - "There are no specific anti-patterns"
+      - "Code restatement is acceptable sometimes"
+
+  - id: status-values
+    question: "What status values are allowed for artifacts in the manifest?"
+    difficulty: easy
+    answer: "Exactly five values: current, stale, missing, wip, draft. This is a closed enum — AIs should not invent new statuses. These cover the full lifecycle: missing (doesn't exist), draft/wip (in progress), current (up to date), stale (code changed since last evaluation)."
+    required_facts:
+      - "Five values: current, stale, missing, wip, draft"
+      - "Closed enum — no others allowed"
+    red_flags:
+      - "Additional statuses like 'archived' or 'deprecated'"
+      - "Open-ended status values"
+
+  - id: score-display
+    question: "How should artifact scores be stored and displayed?"
+    difficulty: easy
+    answer: "Scores are stored as display levels 1-5, never as raw totals. Raw totals vary by rubric type (15-18 max points), so levels normalise across artifact types. The manifest stores the mapped level. This means a score of 5 for architecture (max 18 points) and a score of 5 for features (max 17 points) are comparable."
+    required_facts:
+      - "Display levels 1-5 only"
+      - "Never raw totals"
+      - "Levels normalise across different rubric types"
+    red_flags:
+      - "Raw point totals are stored"
+      - "Percentages are used"
+
+  - id: scenario-add-new-spec
+    question: "If asked to create a new spec document for this project, what conventions should you follow?"
+    difficulty: hard
+    answer: "Follow the spec-writing conventions: (1) Every statement earns its place — delete anything an AI could infer from code. (2) Front-load non-obvious information. (3) No 'Overview' preamble or empty sections. (4) Specific headings (e.g., 'API Auth (JWT with Redis sessions)' not 'Authentication'). (5) Target 1-3KB. (6) Use lists and tables over prose. (7) ATX headings, fenced code blocks with language identifier. (8) If it's a new guidance doc, follow the recipe at specs/guidance-recipe.md (research first, write guide, self-evaluate against ai-doc-quality.md principles)."
+    required_facts:
+      - "Delete anything AI can infer from code"
+      - "Front-load non-obvious"
+      - "1-3KB target"
+      - "Tables and lists over prose"
+      - "Follow guidance recipe if applicable"
+    red_flags:
+      - "Write comprehensive documentation"
+      - "Start with an overview section"
+      - "Include code examples from the codebase"
+
+  - id: scenario-modify-manifest
+    question: "If you needed to add a new artifact type to the manifest, what format would you use?"
+    difficulty: medium
+    answer: "Add an entry under the artifacts key using lowercase-with-hyphens for the key name: 'my-artifact: { score: 1, status: missing, last_evaluated: 2026-02-28 }'. Score is a display level 1-5, status is from the closed enum (current/stale/missing/wip/draft), date is ISO 8601 date only (no datetime). Create a corresponding detail file at .chat-spec/artifacts/my-artifact.yaml with the checklist and backlog."
+    required_facts:
+      - "Lowercase-with-hyphens key"
+      - "Score as display level 1-5"
+      - "Status from closed enum"
+      - "ISO 8601 date only"
+      - "Corresponding detail file needed"
+    red_flags:
+      - "camelCase key"
+      - "Raw score totals"
+      - "No detail file"

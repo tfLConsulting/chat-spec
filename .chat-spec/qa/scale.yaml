@@ -1,0 +1,82 @@
+category: scale
+description: "Tests whether an AI understands the size, scope, and boundaries of the project"
+
+questions:
+  - id: project-size
+    question: "How big is the chat-spec project in terms of codebase?"
+    difficulty: easy
+    answer: "chat-spec is a markdown-only project. There is no source code, no build system, no dependencies. The deliverables are three markdown files at the project root: PROTOCOL.md, RUBRICS.md, and README.md. The rest is research, guidance, development history, and the project's own documentation (which is also the dogfooding test)."
+    required_facts:
+      - "Markdown-only, no source code"
+      - "No build system or dependencies"
+      - "Three deliverable files at root"
+    red_flags:
+      - "It has a src/ directory"
+      - "It uses Node.js / Python / any programming language"
+      - "It has a test suite"
+
+  - id: deliverables
+    question: "What are the deliverables of chat-spec?"
+    difficulty: easy
+    answer: "Three markdown files at the project root: PROTOCOL.md (the protocol AI tools follow), RUBRICS.md (scoring rubrics for 13 artifact types), and README.md (human landing page). These are the product — everything else in the repo supports their creation and validation."
+    required_facts:
+      - "PROTOCOL.md — the core protocol"
+      - "RUBRICS.md — scoring rubrics"
+      - "README.md — human landing page"
+      - "They live at the project root"
+    red_flags:
+      - "The specs/ directory contains deliverables"
+      - "There's a CLI or binary deliverable"
+      - "The guidance/ directory is a deliverable"
+
+  - id: scope-boundaries
+    question: "What does chat-spec NOT do?"
+    difficulty: medium
+    answer: "chat-spec does not: generate or sync AI config files beyond a 3-line pointer; run as a CLI, MCP server, or standalone tool; require installation, dependencies, or accounts; replace existing documentation (it builds on what exists); do anything automatically (every action requires user approval). It also does not generate code, run tests, or evaluate code quality directly."
+    required_facts:
+      - "Does not run as a tool or CLI"
+      - "Does not require installation"
+      - "Does not act without user approval"
+      - "Does not replace existing docs"
+    red_flags:
+      - "It automatically updates documentation"
+      - "It can be installed via npm/pip"
+      - "It evaluates code quality"
+
+  - id: artifact-types
+    question: "How many artifact types does chat-spec support and what are the categories?"
+    difficulty: easy
+    answer: "13 built-in artifact types: 4 core (architecture, features, conventions, dev-context) and 9 specialised (API docs, data model, deployment, dependencies, design system, security model, performance, integration, AI context config). Users can also define custom artifact types."
+    required_facts:
+      - "13 built-in types total"
+      - "4 core types"
+      - "9 specialised types"
+      - "Custom types are supported"
+    red_flags:
+      - "Only 4 artifact types"
+      - "Only works with architecture docs"
+      - "Cannot be extended"
+
+  - id: external-dependencies
+    question: "What external dependencies does chat-spec have?"
+    difficulty: easy
+    answer: "None. The protocol assumes only: (1) an AI that can read files and write files, and (2) a filesystem. Git is recommended for sharing state across team members and for staleness detection, but not required — staleness detection falls back to file modification times."
+    required_facts:
+      - "No external dependencies"
+      - "Requires only an AI and a filesystem"
+      - "Git is recommended but not required"
+    red_flags:
+      - "Requires a specific AI model"
+      - "Requires a database"
+      - "Requires an API key or cloud service"
+
+  - id: team-size
+    question: "What is the team structure for chat-spec?"
+    difficulty: easy
+    answer: "Solo maintainer project. No code review or approval process — changes land on main directly."
+    required_facts:
+      - "Solo maintainer"
+      - "No formal review process"
+    red_flags:
+      - "Large team"
+      - "Has contributors or reviewers"
